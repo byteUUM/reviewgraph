@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReviewGraph · Python 代码审查流水线</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>ReviewGraph</h1>
+  <p>粘贴 Python 代码，看 LangGraph 如何逐节点完成审查：静态检查 → 模型审查 → 评审打分，覆盖不足时自动回到审查再来一轮。</p>
+</header>
+<main>
+  <section class="editor">
+    <label for="code">代码</label>
+    <textarea id="code" spellcheck="false"></textarea>
+    <div class="actions">
+      <button id="run">开始审查</button>
+      <button id="sample" class="ghost">载入示例</button>
+    </div>
+  </section>
+  <section class="flow" aria-live="polite">
+    <ol id="rail">
+      <li data-node="static"><b>静态检查</b><span>ast 扫描规则</span><em></em></li>
+      <li data-node="review"><b>模型审查</b><span>结合检查结果写意见</span><em></em></li>
+      <li data-node="critic"><b>评审打分</b><span>意见覆盖了多少发现</span><em></em></li>
+      <li data-node="report"><b>生成报告</b><span>汇总输出</span><em></em></li>
+    </ol>
+    <div id="loop" hidden></div>
+    <pre id="report" class="report">报告会显示在这里。</pre>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
