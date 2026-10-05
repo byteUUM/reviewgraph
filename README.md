@@ -21,3 +21,31 @@ export $(grep -v '^#' .env | xargs)
 ```
 
 接口：`POST /api/review` 返回完整状态；`POST /api/stream` 以 SSE 逐节点推送。
+
+## 图结构
+
+```mermaid
+flowchart LR
+    S([START]) --> static
+    static -->|语法错误| report
+    static --> review
+    review --> critic
+    critic -->|覆盖率 < 90% 且轮数 < 2| review
+    critic --> report
+    report --> E([END])
+```
+
+| 文件 | 作用 |
+| --- | --- |
+| `app/state.py` | 图的共享状态 `ReviewState` |
+| `app/analyzer.py` | 基于 `ast` 的静态规则 |
+| `app/llm.py` | 离线模拟模型 / OpenAI 兼容模型适配 |
+| `app/nodes.py` | 各节点与条件路由函数 |
+| `app/graph.py` | 组装 `StateGraph` |
+| `app/server.py` | FastAPI 接口与静态页面 |
+
+## 测试
+
+```bash
+python -m pytest -q
+```
