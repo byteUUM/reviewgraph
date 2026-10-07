@@ -49,3 +49,8 @@ flowchart LR
 ```bash
 python -m pytest -q
 ```
+
+## 后续计划
+
+- 增加 `ruff` / `bandit` 结果作为额外的静态检查节点
+- 用 LangGraph checkpointer 保存审查历史
